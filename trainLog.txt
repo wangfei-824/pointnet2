@@ -1,0 +1,20 @@
+
+####################################################################
+2021-05-21
+pointnet2安装及调试
+1. conda创建虚拟环境，安装python=2.7，tensorflow-gpu=1.2
+2. 编译自定义op，需要将源码中写好的.sh文件做些修改，将tensorflow目录改为${CONDA_PREFIX}/lib/python2.7/site-packages/tensorflow/include，将cuda目录改为${CUDA_HOME}/include 等
+3. 提前下载好数据集，其中ModelNet40_sampled那个数据集里有个文件名字和程序里不一致，需要改一下
+4. 运行参数中，--normal 既控制数据集的选取，又影响输入数据是否包含normal特征，源码中的msg模型不能用6特征的输入，reshape的时候会维度不一致
+
+####################################################################
+
+####################################################################
+2021-05-21
+训练pointnet++网络，做ModelNet40数据集上的分类任务。
+在train.py文件中加入了设置随机数中的代码，用于重复实验结果。见行。
+训练命令如下： 
+python train.py --gpu 0 --model pointnet2_cls_ssg --log_dir log-0521 --num_point 1024 --max_epoch 251 --batch_size 16 --learning_rate 0.001 --momentum 0.9 --optimizer adam --decay_step 200000 --decay_rate 0.7 --normal
+
+####################################################################
+
